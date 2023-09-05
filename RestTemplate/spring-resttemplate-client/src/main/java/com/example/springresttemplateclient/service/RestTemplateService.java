@@ -22,16 +22,18 @@ public class RestTemplateService {
     }
 
     public ItemDto getCallObject(String query) {
+        // 요청 URL 만들기
         URI uri = UriComponentsBuilder
                 .fromUriString("http://localhost:7070")
-                .path("/api/server/get-cal-obj")
+                .path("/api/server/get-call-obj")
                 .queryParam("query", query)
                 .encode()
                 .build()
                 .toUri();
-
         log.info("uri = " + uri);
+
         ResponseEntity<ItemDto> responseEntity = restTemplate.getForEntity(uri, ItemDto.class);
+
         log.info("statusCode = " + responseEntity.getStatusCode());
 
         return responseEntity.getBody();

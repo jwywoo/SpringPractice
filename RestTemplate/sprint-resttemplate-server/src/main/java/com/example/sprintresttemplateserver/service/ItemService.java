@@ -20,6 +20,11 @@ public class ItemService {
     );
 
     public Item getCallObject(String query) {
+        for (Item item : itemList) {
+            if (item.getTitle().equals(query)) {
+                return item;
+            }
+        }
         return null;
     }
 
