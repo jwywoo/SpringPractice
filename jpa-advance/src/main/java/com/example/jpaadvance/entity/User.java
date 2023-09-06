@@ -24,8 +24,7 @@ public class User {
 //        this.foodList.add(food);
 //        food.setUser(this);
 //    }
-
-    // OneToOne
+//    OneToOne
 //    @OneToOne(mappedBy = "user")
 //    private Food food;
 //    public void addFood(Food food) {

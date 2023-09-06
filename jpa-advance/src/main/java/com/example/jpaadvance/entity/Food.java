@@ -18,13 +18,21 @@ public class Food {
     private String name;
     private double price;
 
+    // ManyToMany
+    @ManyToMany
+    @JoinTable(name="orders",
+            joinColumns = @JoinColumn(name="food_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> userList = new ArrayList<>();
 //    @OneToOne
 //    @JoinColumn(name = "user_id")
 //    private User user;
 //    @ManyToOne
 //    @JoinColumn(name = "user_id")
 //    private User user;
-    @OneToMany
-    @JoinColumn(name = "food_id")
-    private List<User> userList = new ArrayList<>();
+//    @OneToMany
+//    @JoinColumn(name = "food_id")
+//    private List<User> userList = new ArrayList<>();
 }
+
+
