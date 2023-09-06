@@ -21,21 +21,21 @@ public class OneToOneTest {
     @Autowired
     UserRepository userRepository;
 
-    @Test
-    @Rollback(value = false)
-    @DisplayName("O2O test")
-    void test1() {
-        User user = new User();
-        user.setName("Robbie");
-
-        Food food = new Food();
-        food.setName("Korean Fried Chicken");
-        food.setPrice(11000);
-        food.setUser(user);
-
-        userRepository.save(user);
-        foodRepository.save(food);
-    }
+//    @Test
+//    @Rollback(value = false)
+//    @DisplayName("O2O test")
+//    void test1() {
+//        User user = new User();
+//        user.setName("Robbie");
+//
+//        Food food = new Food();
+//        food.setName("Korean Fried Chicken");
+//        food.setPrice(11000);
+//        food.setUser(user);
+//
+//        userRepository.save(user);
+//        foodRepository.save(food);
+//    }
 
 //    @Test
 //    @Rollback(value = false)
