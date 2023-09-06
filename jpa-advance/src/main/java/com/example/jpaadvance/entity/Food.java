@@ -15,7 +15,10 @@ public class Food {
     private String name;
     private double price;
 
-    @OneToOne
+//    @OneToOne
+//    @JoinColumn(name = "user_id")
+//    private User user;
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 }
