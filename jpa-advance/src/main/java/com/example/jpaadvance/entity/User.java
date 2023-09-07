@@ -18,9 +18,12 @@ public class User {
     private String name;
 
     @OneToMany(mappedBy = "user")
-    private List<Order> orderList = new ArrayList<>();
+    private List<Food> foodList = new ArrayList<>();
 }
 
+// ManyToMany through third table
+//@OneToMany(mappedBy = "user")
+//    private List<Order> orderList = new ArrayList<>();
 // OneToMany
 //    @OneToMany(mappedBy = "user")
 //    private List<Food> foodList = new ArrayList<>();
