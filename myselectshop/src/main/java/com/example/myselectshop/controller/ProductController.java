@@ -24,4 +24,9 @@ public class ProductController {
     public ProductResponseDto updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto requestDto) {
         return productService.updateProduct(id, requestDto);
     }
+
+    @GetMapping("/products")
+    public List<ProductResponseDto> productList() {
+        return productService.productList();
+    }
 }

@@ -9,6 +9,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -16,11 +19,11 @@ public class ProductService {
 
     public static final int MIN_MY_PRICE = 100;
 
-    @Transactional
     public ProductResponseDto createProduct(ProductRequestDto requestDto) {
         return new ProductResponseDto(productRepository.save(new Product(requestDto)));
     }
 
+    @Transactional
     public ProductResponseDto updateProduct(Long id, ProductMypriceRequestDto requestDto) {
         int myPrice = requestDto.getMyprice();
         if (myPrice < MIN_MY_PRICE) {
@@ -29,5 +32,15 @@ public class ProductService {
         Product product = productRepository.findById(id).orElseThrow(() -> new NullPointerException("Product is not valid"));
         product.update(requestDto);
         return new ProductResponseDto(product);
+    }
+
+    public List<ProductResponseDto> productList() {
+        return productRepository.findAllByOrderByModifiedAtDesc().stream().map(ProductResponseDto::new).toList();
+//        List<Product> productList = productRepository.findAll();
+//        List<ProductResponseDto> responseDtoList = new ArrayList<>();
+//        for (Product product: productList) {
+//            responseDtoList.add(new ProductResponseDto(product));
+//        }
+//        return responseDtoList;
     }
 }
