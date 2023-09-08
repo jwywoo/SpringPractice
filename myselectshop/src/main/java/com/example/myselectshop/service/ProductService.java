@@ -8,7 +8,6 @@ import com.example.myselectshop.naver.dto.ItemDto;
 import com.example.myselectshop.repository.FolderRepository;
 import com.example.myselectshop.repository.ProductFolderRepository;
 import com.example.myselectshop.repository.ProductRepository;
-import com.example.myselectshop.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
