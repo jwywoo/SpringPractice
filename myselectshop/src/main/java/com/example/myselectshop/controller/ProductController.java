@@ -48,4 +48,16 @@ public class ProductController {
     {
         productService.addFolder(productId, folderId, userDetails.getUser());
     }
+
+    @GetMapping("/folders/{folderId}/products")
+    public Page<ProductResponseDto> getProductsInFolder(
+            @PathVariable Long folderId,
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam("sortBy") String sortBy,
+            @RequestParam("isAsc") boolean isAsc
+    ) {
+        return productService.getProductsInFolder(folderId, userDetails.getUser(),page-1, size, sortBy, isAsc);
+    }
 }
