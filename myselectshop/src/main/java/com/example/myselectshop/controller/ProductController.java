@@ -7,6 +7,7 @@ import com.example.myselectshop.security.UserDetailsImpl;
 import com.example.myselectshop.service.ProductService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class ProductController {
     private final ProductService productService;
+
     @PostMapping("/products")
     public ProductResponseDto createProduct(@RequestBody ProductRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
@@ -29,12 +31,13 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public List<ProductResponseDto> productList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return productService.productList(userDetails.getUser());
-    }
+    public Page<ProductResponseDto> productList(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                                @RequestParam("page") int page,
+                                                @RequestParam("size") int size,
+                                                @RequestParam("sortBy") String sortBy,
+                                                @RequestParam("isAsc") boolean isAsc) {
 
-    @GetMapping("/admin/products")
-    public List<ProductResponseDto> getAllProducts() {
-        return productService.getAllProducts();
+        return productService.productList(userDetails.getUser(),
+                page - 1, size, sortBy, isAsc);
     }
 }
