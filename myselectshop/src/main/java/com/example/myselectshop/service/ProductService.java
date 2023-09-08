@@ -3,10 +3,10 @@ package com.example.myselectshop.service;
 import com.example.myselectshop.dto.ProductMypriceRequestDto;
 import com.example.myselectshop.dto.ProductRequestDto;
 import com.example.myselectshop.dto.ProductResponseDto;
-import com.example.myselectshop.entity.Product;
-import com.example.myselectshop.entity.User;
-import com.example.myselectshop.entity.UserRoleEnum;
+import com.example.myselectshop.entity.*;
 import com.example.myselectshop.naver.dto.ItemDto;
+import com.example.myselectshop.repository.FolderRepository;
+import com.example.myselectshop.repository.ProductFolderRepository;
 import com.example.myselectshop.repository.ProductRepository;
 import com.example.myselectshop.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -19,11 +19,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+    private final FolderRepository folderRepository;
+    private final ProductFolderRepository productFolderRepository;
 
     public static final int MIN_MY_PRICE = 100;
 
@@ -50,7 +53,7 @@ public class ProductService {
 
         UserRoleEnum userRoleEnum = user.getRole();
         Page<Product> productList;
-        if (userRoleEnum==UserRoleEnum.USER) {
+        if (userRoleEnum == UserRoleEnum.USER) {
             productList = productRepository.findAllByUser(user, pageable);
         } else {
             productList = productRepository.findAll(pageable);
@@ -70,5 +73,28 @@ public class ProductService {
     public void updateBySearch(Long id, ItemDto itemDto) {
         Product product = productRepository.findById(id).orElseThrow(() -> new NullPointerException("Not a valid product"));
         product.updateByItemDto(itemDto);
+    }
+
+    public void addFolder(Long productId, Long folderId, User user) {
+        // Availability check
+        Product product = productRepository.findById(productId).orElseThrow(
+                () -> new NullPointerException("Not available"));
+        Folder folder = folderRepository.findById(folderId).orElseThrow(
+                () -> new NullPointerException("Not Available"));
+
+        // Availability check
+        if (!product.getUser().getId().equals(user.getId())
+                || !folder.getUser().getId().equals(user.getId())) {
+            throw new IllegalArgumentException("Not Available");
+        }
+
+        // Duplication check
+        Optional<ProductFolder> overlap = productFolderRepository.findByProductAndFolder(product, folder);
+
+        if (overlap.isPresent()) {
+            throw new IllegalArgumentException("Already Exist");
+        }
+
+        productFolderRepository.save(new ProductFolder(product, folder));
     }
 }
