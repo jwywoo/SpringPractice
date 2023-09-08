@@ -2,7 +2,7 @@ package com.example.myselectshop.filter;
 
 import com.example.myselectshop.security.UserDetailsImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.myselectshop.dto.LoginRequestDto;
+import com.example.myselectshop.dto.LoginRequestDto;
 import com.example.myselectshop.entity.UserRoleEnum;
 import com.example.myselectshop.jwt.JwtUtil;
 import jakarta.servlet.FilterChain;

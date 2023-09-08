@@ -1,4 +1,4 @@
-package com.sparta.myselectshop.dto;
+package com.example.myselectshop.dto;
 
 import lombok.Getter;
 import lombok.Setter;

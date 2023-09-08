@@ -4,13 +4,15 @@ import com.example.myselectshop.dto.ProductMypriceRequestDto;
 import com.example.myselectshop.dto.ProductRequestDto;
 import com.example.myselectshop.dto.ProductResponseDto;
 import com.example.myselectshop.entity.Product;
+import com.example.myselectshop.entity.User;
 import com.example.myselectshop.naver.dto.ItemDto;
 import com.example.myselectshop.repository.ProductRepository;
 import jakarta.transaction.Transactional;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,8 +22,8 @@ public class ProductService {
 
     public static final int MIN_MY_PRICE = 100;
 
-    public ProductResponseDto createProduct(ProductRequestDto requestDto) {
-        return new ProductResponseDto(productRepository.save(new Product(requestDto)));
+    public ProductResponseDto createProduct(ProductRequestDto requestDto, User user) {
+        return new ProductResponseDto(productRepository.save(new Product(requestDto, user)));
     }
 
     @Transactional
@@ -35,8 +37,10 @@ public class ProductService {
         return new ProductResponseDto(product);
     }
 
-    public List<ProductResponseDto> productList() {
-        return productRepository.findAllByOrderByModifiedAtDesc().stream().map(ProductResponseDto::new).toList();
+    public List<ProductResponseDto> productList(User user) {
+        List<Product> productList = productRepository.findAllByUser(user);
+        return productList.stream().map(ProductResponseDto::new).toList();
+//        return productRepository.findAllByOrderByModifiedAtDesc().stream().map(ProductResponseDto::new).toList();
 //        List<Product> productList = productRepository.findAll();
 //        List<ProductResponseDto> responseDtoList = new ArrayList<>();
 //        for (Product product: productList) {
@@ -49,5 +53,9 @@ public class ProductService {
     public void updateBySearch(Long id, ItemDto itemDto) {
         Product product = productRepository.findById(id).orElseThrow(() -> new NullPointerException("Not a valid product"));
         product.updateByItemDto(itemDto);
+    }
+
+    public List<ProductResponseDto> getAllProducts() {
+        return productRepository.findAllByOrderByModifiedAtDesc().stream().map(ProductResponseDto::new).toList();
     }
 }
