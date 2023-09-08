@@ -4,6 +4,7 @@ import com.example.myselectshop.dto.ProductMypriceRequestDto;
 import com.example.myselectshop.dto.ProductRequestDto;
 import com.example.myselectshop.dto.ProductResponseDto;
 import com.example.myselectshop.entity.Product;
+import com.example.myselectshop.naver.dto.ItemDto;
 import com.example.myselectshop.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,11 @@ public class ProductService {
 //            responseDtoList.add(new ProductResponseDto(product));
 //        }
 //        return responseDtoList;
+    }
+
+    @Transactional
+    public void updateBySearch(Long id, ItemDto itemDto) {
+        Product product = productRepository.findById(id).orElseThrow(() -> new NullPointerException("Not a valid product"));
+        product.updateByItemDto(itemDto);
     }
 }
