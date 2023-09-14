@@ -5,7 +5,6 @@ import com.example.usedproductsapi.dto.ItemResponseDto;
 import com.example.usedproductsapi.dto.ItemUpdateRequestDto;
 import com.example.usedproductsapi.dto.StringResponseDto;
 import com.example.usedproductsapi.service.ItemService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
