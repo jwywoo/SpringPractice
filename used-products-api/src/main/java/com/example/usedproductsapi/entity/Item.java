@@ -1,5 +1,7 @@
 package com.example.usedproductsapi.entity;
 
+import com.example.usedproductsapi.dto.ItemRequestDto;
+import com.example.usedproductsapi.dto.ItemUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,4 +28,18 @@ public class Item {
     private int price;
     @Column(name = "username", nullable = false)
     private String username;
+
+    public Item(ItemRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+        this.price = requestDto.getPrice();
+        this.username = requestDto.getUsername();
+    }
+
+    public void update(ItemUpdateRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+        this.price = requestDto.getPrice();
+        this.username = requestDto.getUsername();
+    }
 }
