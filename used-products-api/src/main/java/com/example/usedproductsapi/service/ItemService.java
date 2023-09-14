@@ -33,7 +33,9 @@ public class ItemService {
     @Transactional
     public ItemResponseDto itemUpdate(Long id, ItemUpdateRequestDto requestDto) {
         Item item = findById(id);
+        System.out.println(item.getTitle());
         item.update(requestDto);
+        System.out.println(item.getTitle());
         return new ItemResponseDto(item);
     }
 

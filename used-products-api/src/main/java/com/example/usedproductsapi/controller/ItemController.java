@@ -33,7 +33,7 @@ public class ItemController {
     }
 
     @PutMapping("/post/{id}")
-    public ItemResponseDto itemUpdate(@PathVariable Long id, ItemUpdateRequestDto requestDto) {
+    public ItemResponseDto itemUpdate(@PathVariable Long id, @RequestBody ItemUpdateRequestDto requestDto) {
         return itemService.itemUpdate(id, requestDto);
     }
 
